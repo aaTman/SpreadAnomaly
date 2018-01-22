@@ -1,3 +1,0 @@
-# SpreadAnomaly
-# SpreadAnomaly
-# SpreadAnomaly
