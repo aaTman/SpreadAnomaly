@@ -540,7 +540,7 @@ def pwatplotMaker(date, ensMean, ensStd, datefhour, dateArr, ssaAnom,
 
     cf = ax3.contourf(x,y,ensStd,sprdspace,
                   transform=ccrs.PlateCarree(),colors=colors,zorder=2)
-    c1=ax3.contour(x,y,ensMean,levels=pwatspace,colors='g',linewidths=1.2,transform=ccrs.PlateCarree())
+    c1=ax3.contour(x,y,ensMean,levels=pwatspace,colors='k',linewidths=1.2,transform=ccrs.PlateCarree())
     cbar=plt.colorbar(cf,aspect=50,ticks=sprdspace, orientation='horizontal',
                       pad=0.01,extend='max',extendrect=True)
     cbar.set_label('Spread (mm)')
@@ -561,7 +561,7 @@ def pwatplotMaker(date, ensMean, ensStd, datefhour, dateArr, ssaAnom,
 
     cf = ax3.contourf(x,y,ensStd,sprdspace,
                   transform=ccrs.PlateCarree(),colors=colors,zorder=2)
-    c1=ax3.contour(x,y,pmm,levels=pwatspace,colors='g',linewidths=1.2,transform=ccrs.PlateCarree())
+    c1=ax3.contour(x,y,pmm,levels=pwatspace,colors='k',linewidths=1.2,transform=ccrs.PlateCarree())
     cbar=plt.colorbar(cf,aspect=50,ticks=sprdspace, orientation='horizontal',
                       pad=0.01,extend='max',extendrect=True)
     cbar.set_label('Spread (mm)')
@@ -587,7 +587,7 @@ def pwatplotMaker(date, ensMean, ensStd, datefhour, dateArr, ssaAnom,
 
     cf = ax3.contourf(x,y,ssaAnom,[-8,-5,-3,-2,-1,1,2,3,5,8],
                       transform=ccrs.PlateCarree(),colors=colorsdiv,zorder=2)
-    c1=ax3.contour(x,y,ensMean,levels=pwatspace,colors='g',linewidths=1.2,transform=ccrs.PlateCarree())
+    c1=ax3.contour(x,y,ensMean,levels=pwatspace,colors='k',linewidths=1.2,transform=ccrs.PlateCarree())
     cbar=plt.colorbar(cf,ticks=[-8,-5,-3,-2,-1,1,2,3,5,8],
                       orientation='horizontal',pad=0.01,aspect=50)
     cbar.set_label('Standardized Anomaly (sigma)')
@@ -614,7 +614,7 @@ def pwatplotMaker(date, ensMean, ensStd, datefhour, dateArr, ssaAnom,
             (0.824, 0.306, 0.443,1),
             (0.671, 0.078, 0.533,1))
     cf = ax3.contourf(x,y,subsetPerc,[0,90,95,99,99.5,99.9,100],transform=ccrs.PlateCarree(),colors=colors3,zorder=2)
-    c1=ax3.contour(x,y,ensMean,levels=pwatspace,colors='g',linewidths=1.2,transform=ccrs.PlateCarree())
+    c1=ax3.contour(x,y,ensMean,levels=pwatspace,colors='k',linewidths=1.2,transform=ccrs.PlateCarree())
     cbar=plt.colorbar(cf,aspect=50,ticks=[0,90,95,99,99.5,99.9,100],pad=0.01, orientation='horizontal')
     cbar.set_label('Restricted Anomaly Percentile')
     clab = plt.clabel(c1,fontsize=14,inline_spacing=-0.5,fmt='%3.0f',color='k')
@@ -633,7 +633,7 @@ def pwatplotMaker(date, ensMean, ensStd, datefhour, dateArr, ssaAnom,
 
 
     cf = ax3.contourf(x,y,totalPerc,[0,90,95,99,99.5,99.9,100],transform=ccrs.PlateCarree(),colors=colors3,zorder=2)
-    c1=ax3.contour(x,y,ensMean,levels=pwatspace,colors='g',linewidths=1.2,transform=ccrs.PlateCarree())
+    c1=ax3.contour(x,y,ensMean,levels=pwatspace,colors='k',linewidths=1.2,transform=ccrs.PlateCarree())
     cbar=plt.colorbar(cf,aspect=50,pad=0.01,ticks=[0,90,95,99,99.5,99.9,100], orientation='horizontal')
     cbar.set_label('All Anomaly Percentile')
     clab = plt.clabel(c1,fontsize=14,inline_spacing=-0.5,fmt='%3.0f',color='k')
@@ -914,7 +914,7 @@ def pwatplotMakerY(date, ensMean, ensStd, datefhour, dateArr, pmm, lats, lons):
 
     cf = ax3.contourf(x,y,ensStd,sprdspace,
                   transform=ccrs.PlateCarree(),colors=colors,zorder=2)
-    c1=ax3.contour(x,y,ensMean,levels=pwatspace,colors='g',linewidths=1.2,transform=ccrs.PlateCarree())
+    c1=ax3.contour(x,y,ensMean,levels=pwatspace,colors='k',linewidths=1.2,transform=ccrs.PlateCarree())
     cbar=plt.colorbar(cf,aspect=50,ticks=sprdspace, orientation='horizontal',
                       pad=0.01,extend='max',extendrect=True)
     cbar.set_label('Spread (mm)')
@@ -936,7 +936,7 @@ def pwatplotMakerY(date, ensMean, ensStd, datefhour, dateArr, pmm, lats, lons):
 
     cf = ax3.contourf(x,y,ensStd,sprdspace,
                   transform=ccrs.PlateCarree(),colors=colors,zorder=2)
-    c1=ax3.contour(x,y,pmm,levels=pwatspace,colors='g',linewidths=1.2,transform=ccrs.PlateCarree())
+    c1=ax3.contour(x,y,pmm,levels=pwatspace,colors='k',linewidths=1.2,transform=ccrs.PlateCarree())
     cbar=plt.colorbar(cf,aspect=50,ticks=sprdspace, orientation='horizontal',
                       pad=0.01,extend='max',extendrect=True)
     cbar.set_label('Spread')  
@@ -994,7 +994,7 @@ def qpfplotMakerY(date, ensMean, ensStd, datefhour, dateArr, pmm, lats, lons):
 
     cf = ax3.contourf(x,y,ensStd,sprdspace,
                   transform=ccrs.PlateCarree(),colors=colors,zorder=2)
-    c1=ax3.contour(x,y,ensMean,levels=pwatspace,colors='g',linewidths=1.2,transform=ccrs.PlateCarree())
+    c1=ax3.contour(x,y,ensMean,levels=pwatspace,colors='k',linewidths=1.2,transform=ccrs.PlateCarree())
     for l in c1:
         l.set_rotation(0) 
     cbar=plt.colorbar(cf,aspect=50,ticks=sprdspace, orientation='horizontal',
@@ -1016,7 +1016,7 @@ def qpfplotMakerY(date, ensMean, ensStd, datefhour, dateArr, pmm, lats, lons):
 
     cf = ax3.contourf(x,y,ensStd,sprdspace,
                   transform=ccrs.PlateCarree(),colors=colors,zorder=2)
-    c1=ax3.contour(x,y,pmm,levels=pwatspace,colors='g',linewidths=1.2,transform=ccrs.PlateCarree())
+    c1=ax3.contour(x,y,pmm,levels=pwatspace,colors='k',linewidths=1.2,transform=ccrs.PlateCarree())
     for l in c1:
         l.set_rotation(0) 
     cbar=plt.colorbar(cf,aspect=50,ticks=sprdspace, orientation='horizontal',
