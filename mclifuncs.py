@@ -148,6 +148,8 @@ def mcliTimeArray(time=None, var=None):
 
         if datetime.now().month == 11:
             varFile = Dataset('/home/taylorm/mcli/mclidata/mslpNovS.nc')
+        elif datetime.now().month >=3 and datetime.now().month <= 5:
+            varFile = Dataset('/home/taylorm/mcli/mclidata/mslpMAMS.nc')
         else:
             varFile = Dataset('/home/taylorm/mcli/mclidata/mslpNHm.nc')
         # gets the time variable from the netcdf
@@ -214,12 +216,16 @@ def subsetMCli(fcstm, fcsts, m630, s630):
     return pgrid, bsgrid, ssaAnom
 
 
-def mcliLoad(var=None, time=None, ind=None):
+def mcliLoad(var=None, time=None, ind=None,notDJF=None):
     filenames = ['/home/taylorm/mcli/mclidata/'+var+'NHm.nc',
-             '/home/taylorm/mcli/mclidata/'+var+'NHs.nc']
+             '/home/taylorm/mcli/mclidata/'+var+'NHs.nc']   
+
     if ind is not None:
 
         if var == 'mslp':
+            if notDJF is not None:
+                filenames = ['/home/taylorm/mcli/mclidata/'+var+notDJF+'M.nc',
+                 '/home/taylorm/mcli/mclidata/'+var+notDJF+'S.nc']    
             varnc = [Dataset(fn).variables['Pressure'] for fn in filenames]
             mArr = np.array(varnc[0][ind,...,::-1,:])
             sArr = np.array(varnc[1][ind,...,::-1,:])

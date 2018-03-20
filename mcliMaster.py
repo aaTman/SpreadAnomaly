@@ -14,7 +14,6 @@ import gc
 
 from bs4 import BeautifulSoup
 import requests
-import pdb
 """
 Created on Wed Jun  7 16:29:35 2017
 
@@ -91,15 +90,15 @@ def mainfunc(token=0):
     url = page[start_quote + 1: end_quote]
 
     url = url.split('html')
-    endurl = url[1]
+#    endurl = url[1]
 
-    # load in year and month as string
-    year = endurl[83:87]
-    month = endurl[87:89]
-
-    # Load in run and day as string
-    run = endurl[92:94]
-    day = endurl[89:91]
+#    # load in year and month as string
+#    year = endurl[83:87]
+#    month = endurl[87:89]
+#
+#    # Load in run and day as string
+#    run = endurl[92:94]
+#    day = endurl[89:91]
 
     # Path to log
     pathCheck = '/home/taylorm/mcli/logs/'
@@ -153,6 +152,8 @@ def slpFunc(mslpMean, mslpStd, mslppmm, datefhour, dateArr,
     subsetPerc = np.ones_like(mslpMean)
     totalPerc = np.ones_like(mslpMean)
     ssaAnom = np.ones_like(mslpMean)
+    if datetime.now().month >= 3 or datetime.now().month<=5:
+        mArr,sArr = mc.mcliLoad(var='mslp',ind=ind,notDJF='MAM')
     mArr,sArr = mc.mcliLoad(var='mslp', ind=ind)
 
     for i in range(0, len(mslpMean)):

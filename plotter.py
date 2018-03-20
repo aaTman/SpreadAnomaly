@@ -919,7 +919,7 @@ def pwatplotMakerY(date, ensMean, ensStd, datefhour, dateArr, pmm, lats, lons):
                       pad=0.01,extend='max',extendrect=True)
     cbar.set_label('Spread (mm)')
     clab = plt.clabel(c1,fontsize=14,inline_spacing=-0.5,fmt='%3.0f',color='k')
-    for l in c1:
+    for l in clab:
         	l.set_rotation(0)
     plt.title('GEFS Ensemble Precipitable Water Mean, Spread '+'\n'+date.strftime('%Y/%m/%d %Hz ')+
               str(datefhour) +'h Forecast valid ' + dateArr.strftime('%Y/%m/%d %Hz '),loc='left')
@@ -940,9 +940,10 @@ def pwatplotMakerY(date, ensMean, ensStd, datefhour, dateArr, pmm, lats, lons):
     cbar=plt.colorbar(cf,aspect=50,ticks=sprdspace, orientation='horizontal',
                       pad=0.01,extend='max',extendrect=True)
     cbar.set_label('Spread')  
-    for l in c1:
-        l.set_rotation(0) 
+
     clab = plt.clabel(c1,fontsize=14,inline_spacing=-0.5,fmt='%3.0f',color='k')
+    for l in clab:
+        l.set_rotation(0) 
     plt.title('GEFS Probability Matched Mean Precipitable Water, Spread '+'\n'+date.strftime('%Y/%m/%d %Hz ')+
               str(datefhour) +'h Forecast valid ' + dateArr.strftime('%Y/%m/%d %Hz '),loc='left')
     if datefhour == 6 or datefhour == 0:
@@ -981,7 +982,7 @@ def qpfplotMakerY(date, ensMean, ensStd, datefhour, dateArr, pmm, lats, lons):
 
     x,y=np.meshgrid(lons,lats)
     sprdspace=[0,0.5,1,2,4,8,10,15]
-    pwatspace = [0,1,2,5,10,20,30,40,50,60]
+    pwatspace = [0.1,.5,1,2,5,10,20]
     extent = extents[0]
     fig=plt.figure(figsize=(15,15))
     ax3 = plt.axes(projection=proj)
@@ -995,12 +996,13 @@ def qpfplotMakerY(date, ensMean, ensStd, datefhour, dateArr, pmm, lats, lons):
     cf = ax3.contourf(x,y,ensStd,sprdspace,
                   transform=ccrs.PlateCarree(),colors=colors,zorder=2)
     c1=ax3.contour(x,y,ensMean,levels=pwatspace,colors='k',linewidths=1.2,transform=ccrs.PlateCarree())
-    for l in c1:
-        l.set_rotation(0) 
+
     cbar=plt.colorbar(cf,aspect=50,ticks=sprdspace, orientation='horizontal',
                       pad=0.01,extend='max',extendrect=True)
     cbar.set_label('Spread (mm)')
     clab = plt.clabel(c1,fontsize=14,inline_spacing=-0.5,fmt='%3.0f',color='k')
+    for l in clab:
+        l.set_rotation(0) 
     plt.title('GEFS Ensemble QPF Mean, Spread '+'\n'+date.strftime('%Y/%m/%d %Hz ')+
               str(datefhour) +'h Forecast valid ' + dateArr.strftime('%Y/%m/%d %Hz '),loc='left')
     if datefhour == 6 or datefhour == 0:
@@ -1017,12 +1019,12 @@ def qpfplotMakerY(date, ensMean, ensStd, datefhour, dateArr, pmm, lats, lons):
     cf = ax3.contourf(x,y,ensStd,sprdspace,
                   transform=ccrs.PlateCarree(),colors=colors,zorder=2)
     c1=ax3.contour(x,y,pmm,levels=pwatspace,colors='k',linewidths=1.2,transform=ccrs.PlateCarree())
-    for l in c1:
-        l.set_rotation(0) 
     cbar=plt.colorbar(cf,aspect=50,ticks=sprdspace, orientation='horizontal',
                       pad=0.01,extend='max',extendrect=True)
     cbar.set_label('Spread (mm)')
     clab = plt.clabel(c1,fontsize=14,inline_spacing=-0.5,fmt='%3.0f',color='k')
+    for l in clab:
+        l.set_rotation(0) 
     plt.title('GEFS Probability Matched Mean QPF, Spread '+'\n'+date.strftime('%Y/%m/%d %Hz ')+
               str(datefhour) +'h Forecast valid ' + dateArr.strftime('%Y/%m/%d %Hz '),loc='left')
     if datefhour == 6 or datefhour == 0:
