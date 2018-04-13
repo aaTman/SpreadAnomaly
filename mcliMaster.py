@@ -112,6 +112,17 @@ def mainfunc(token=0):
 
 def slpFuncY(mslpMean, mslpStd, mslppmm, datefhour, dateArr,
             lats, lons, date, ind):
+    
+    subsetPerc = np.ones_like(mslpMean)
+    totalPerc = np.ones_like(mslpMean)
+    ssaAnom = np.ones_like(mslpMean)
+    if datetime.now().month >= 3 or datetime.now().month<=5:
+        mArr,sArr = mc.mcliLoad(var='mslp',ind=ind,notDJF='MAM')
+    else:
+        mArr,sArr = mc.mcliLoad(var='mslp', ind=ind)
+
+    for i in range(0, len(mslpMean)):
+        subsetPerc[i], totalPerc[i], ssaAnom[i] = mc.subsetMCli(mslpMean[i], mslpStd[i], mArr[:,i], sArr[:, i])
     print 'starting slp plots'
     [pt.slpplotMakerY(date, mslpMean[i], mslpStd[i], datefhour[i],
      dateArr[i],mslppmm[i], lats, lons) for i in range(0, len(mslpMean))]

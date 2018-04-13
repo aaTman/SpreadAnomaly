@@ -18,9 +18,8 @@ import pdb
 import gc
 from bisect import bisect
 
-
-# The crontab killer when the run has already completed - the code inserts the
-# run into a log file and this checks if it already completed.
+# Pulled percentileofscore from scipy.stats due to a missing module, documentation
+# available in the scipy user guide/api reference.
 def percentileofscore(a, score, kind='rank'):
 
     a = np.array(a)
@@ -47,6 +46,8 @@ def percentileofscore(a, score, kind='rank'):
     else:
         raise ValueError("kind can only be 'rank', 'strict', 'weak' or 'mean'")
 
+# The crontab killer when the run has already completed - the code inserts the
+# run into a log file and this checks if it already completed.
 def GEFScheck(init=0):
     if init == 1:
         url1 = 'http://thredds.ucar.edu/thredds/catalog/grib/NCEP/GEFS/Global_1p0deg_Ensemble/members/latest.html'
@@ -138,7 +139,6 @@ def GEFScheck(init=0):
 # index over the 30 years (erratic index values due to leap years and invalid
 # data).
 
-
 def mcliTimeArray(time=None, var=None):
     # time is used to backtest if needed, var must be declared or else code
     # will error out
@@ -161,7 +161,8 @@ def mcliTimeArray(time=None, var=None):
 
         return timedt
 
-
+# Feeder function which directs the main GEFSload information through and pulls the indices
+# for the 21-day M-Climate dates within the Reforecast dataset.
 def liveLoad(wlon=180, elon=310, slat=20, nlat=80):
 
     print 'loading GEFS file'
@@ -177,7 +178,9 @@ def liveLoad(wlon=180, elon=310, slat=20, nlat=80):
     print 'returning GEFS values to main m-climate function'
     return ind, liveDate, dateArr, mslpMean, mslpStd, mslppmm, lats, lons, tmpMean, tmpStd, hgtMean, hgtStd, tmppmm, hgtpmm,qpfMean, qpfStd, qpfpmm, pwatMean, pwatStd, pwatpmm
 
-
+# Uses percentileofscore to subset the data in the spread distribution to similar events
+# in the mean anomaly (+-5%)
+    
 def subsetMCli(fcstm, fcsts, m630, s630):
 
     mstdgrid = np.ones_like(fcstm)
@@ -215,7 +218,8 @@ def subsetMCli(fcstm, fcsts, m630, s630):
     gc.collect()
     return pgrid, bsgrid, ssaAnom
 
-
+# Loads the M-Climate data using the indices obtained in the liveLoad function.
+# Some of the args are used for testing and are not intended for live usage.
 def mcliLoad(var=None, time=None, ind=None,notDJF=None):
     filenames = ['/home/taylorm/mcli/mclidata/'+var+'NHm.nc',
              '/home/taylorm/mcli/mclidata/'+var+'NHs.nc']   
@@ -256,7 +260,7 @@ def mcliLoad(var=None, time=None, ind=None,notDJF=None):
         dataArr = 0
         return dataArr
 
-
+# Function that is used within liveLoad to pull the indices
 def mcliSub(dateList, fDate):
 
     years = [n.year for n in dateList]
@@ -271,7 +275,8 @@ def mcliSub(dateList, fDate):
         ind = None
     return ind
 
-
+# Probability matched mean from Ebert (2001)
+    
 def pmm(ens):
     # Takes the mean of the ensemble
     ensMean = np.mean(ens, axis=1)
@@ -309,6 +314,8 @@ def pmm(ens):
 
     return enspmm
 
+# Loads GEFS real-time data from THREDDS using siphon.
+# PMM is also called here.
 
 def GEFSload(wlon=180, elon=310, slat=20, nlat=80):
     # Initialize current time variable
