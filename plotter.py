@@ -201,7 +201,7 @@ def tmpplotMaker(date, ensMean, ensStd, datefhour, dateArr, ssaAnom,
     tmpspace = np.arange(-80,50,1)
     extent = extents[0]
     loc = extents[1]
-    fig=plt.figure(figsize=(15,15))
+    fig=plt.figure(figsize=(20,20))
     ax3 = plt.axes(projection=proj)
     ax3.set_extent(extent,crs=ccrs.PlateCarree())
     ax3.coastlines(resolution=('50m'), zorder=4)
@@ -376,7 +376,7 @@ def hgtplotMaker(date, ensMean, ensStd, datefhour, dateArr, ssaAnom,
     hgtspace = range(460,600,6)
     extent = extents[0]
     loc = extents[1]
-    fig=plt.figure(figsize=(15,15))
+    fig=plt.figure(figsize=(20,20))
     ax3 = plt.axes(projection=proj)
     ax3.set_extent(extent,crs=ccrs.PlateCarree())
     ax3.coastlines(resolution=('50m'), zorder=4)
@@ -529,7 +529,7 @@ def pwatplotMaker(date, ensMean, ensStd, datefhour, dateArr, ssaAnom,
     pwatspace = [0,1,2,5,10,20,30,40,50,60]
     extent = extents[0]
     loc = extents[1]
-    fig=plt.figure(figsize=(15,15))
+    fig=plt.figure(figsize=(20,20))
     ax3 = plt.axes(projection=proj)
     ax3.set_extent(extent,crs=ccrs.PlateCarree())
     ax3.coastlines(resolution=('50m'), zorder=4)
@@ -748,7 +748,7 @@ def tmpplotMakerY(date, ensMean, ensStd, datefhour, dateArr, pmm, lats, lons):
     tmpspace = np.arange(-80,50,1)
     extent = extents[0]
     loc = extents[1]
-    fig=plt.figure(figsize=(15,15))
+    fig=plt.figure(figsize=(20,20))
     ax3 = plt.axes(projection=proj)
     ax3.set_extent(extent,crs=ccrs.PlateCarree())
     ax3.coastlines(resolution=('50m'), zorder=4)
@@ -830,7 +830,7 @@ def hgtplotMakerY(date, ensMean, ensStd, datefhour, dateArr, pmm, lats, lons):
     hgtspace = range(460,600,6)
     extent = extents[0]
     loc = extents[1]
-    fig=plt.figure(figsize=(15,15))
+    fig=plt.figure(figsize=(20,20))
     ax3 = plt.axes(projection=proj)
     ax3.set_extent(extent,crs=ccrs.PlateCarree())
     ax3.coastlines(resolution=('50m'), zorder=4)
@@ -903,7 +903,7 @@ def pwatplotMakerY(date, ensMean, ensStd, datefhour, dateArr, pmm, lats, lons):
     pwatspace = [0,1,2,5,10,20,30,40,50,60]
     extent = extents[0]
     loc = extents[1]
-    fig=plt.figure(figsize=(15,15))
+    fig=plt.figure(figsize=(20,20))
     ax3 = plt.axes(projection=proj)
     ax3.set_extent(extent,crs=ccrs.PlateCarree())
     ax3.coastlines(resolution=('50m'), zorder=4)
@@ -984,7 +984,7 @@ def qpfplotMakerY(date, ensMean, ensStd, datefhour, dateArr, pmm, lats, lons):
     sprdspace=[0,0.5,1,2,4,8,10,15]
     pwatspace = [0.1,.5,1,2,5,10,20]
     extent = extents[0]
-    fig=plt.figure(figsize=(15,15))
+    fig=plt.figure(figsize=(20,20))
     ax3 = plt.axes(projection=proj)
     ax3.set_extent(extent,crs=ccrs.PlateCarree())
     ax3.coastlines(resolution=('50m'), zorder=4)
