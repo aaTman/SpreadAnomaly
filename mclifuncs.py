@@ -17,7 +17,7 @@ from netCDF4 import Dataset
 import pdb
 import gc
 from bisect import bisect
-
+from scipy.ndimage.filters import gaussian_filter
 # Pulled percentileofscore from scipy.stats due to a missing module, documentation
 # available in the scipy user guide/api reference.
 def percentileofscore(a, score, kind='rank'):
@@ -150,6 +150,8 @@ def mcliTimeArray(time=None, var=None):
             varFile = Dataset('/home/taylorm/mcli/mclidata/mslpNovS.nc')
         elif datetime.now().month >=3 and datetime.now().month <= 5:
             varFile = Dataset('/home/taylorm/mcli/mclidata/mslpMAMS.nc')
+        elif datetime.now().month >=6 and datetime.now().month <= 8:
+            varFile = Dataset('/home/taylorm/mcli/mclidata/mslpJJAS.nc')
         else:
             varFile = Dataset('/home/taylorm/mcli/mclidata/mslpNHm.nc')
         # gets the time variable from the netcdf
@@ -174,7 +176,6 @@ def liveLoad(wlon=180, elon=310, slat=20, nlat=80):
 
     dates = mcliTimeArray(var='mslp')
     ind = mcliSub(dates, liveDate)
-
     print 'returning GEFS values to main m-climate function'
     return ind, liveDate, dateArr, mslpMean, mslpStd, mslppmm, lats, lons, tmpMean, tmpStd, hgtMean, hgtStd, tmppmm, hgtpmm,qpfMean, qpfStd, qpfpmm, pwatMean, pwatStd, pwatpmm
 
@@ -187,7 +188,8 @@ def subsetMCli(fcstm, fcsts, m630, s630):
     mmngrid = np.ones_like(fcstm)
     pgrid = np.ones_like(fcstm)
     bsgrid = np.ones_like(fcstm)
-
+    stdgrid = np.ones_like(fcstm)
+    mngrid = np.ones_like(fcstm)
     for y in range(0, np.shape(fcstm)[-2]):
         for z in range(0, np.shape(fcstm)[-1]):
             marg = m630[:, y, z].argsort()
@@ -195,7 +197,8 @@ def subsetMCli(fcstm, fcsts, m630, s630):
             sbins = s630[marg, y, z]
             leng = len(mbins)
             centRange = bisect(mbins.tolist(), fcstm[y, z])
-
+            stdgrid[y, z] = np.std(sbins)
+            mngrid[y, z] = np.mean(sbins)
             if centRange <= leng/10:
                 subsetSpread = sbins[0:leng/10]
                 pgrid[y, z] = percentileofscore(subsetSpread, fcsts[y, z])
@@ -213,10 +216,18 @@ def subsetMCli(fcstm, fcsts, m630, s630):
                 mmngrid[y, z] = np.mean(subsetSpread)
 
             bsgrid[y, z] = percentileofscore(sbins, fcsts[y, z])
-
+    saAnom = ((fcsts-(mngrid))/stdgrid)
     ssaAnom = (fcsts - mmngrid)/mstdgrid
+    sanlt = np.array([(0.99-(-0.99))*(ssaAnom[n]-np.min(ssaAnom[n]))/(np.max(ssaAnom[n])-np.min(ssaAnom[n])) + -0.99 for n in range(0,len(ssaAnom))]).reshape(*ssaAnom.shape)
+    sanlt = np.arctanh(sanlt)
+    saAnomSanlt = np.array([(0.99-(-0.99))*(ssaAnom[n]-np.min(ssaAnom[n]))/(np.max(ssaAnom[n])-np.min(ssaAnom[n])) + -0.99 for n in range(0,len(ssaAnom))]).reshape(*saAnom.shape)
+    saAnomSanlt = np.arctanh(saAnomSanlt)
+    sanltg = gaussian_filter(sanlt,1)
+    saAnomSanltg = gaussian_filter(saAnomSanlt,1)
+    pgrid = gaussian_filter(pgrid,1)
+    bsgrid = gaussian_filter(bsgrid,1)
     gc.collect()
-    return pgrid, bsgrid, ssaAnom
+    return pgrid, bsgrid, sanltg,saAnomSanltg
 
 # Loads the M-Climate data using the indices obtained in the liveLoad function.
 # Some of the args are used for testing and are not intended for live usage.
