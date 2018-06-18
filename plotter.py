@@ -24,15 +24,15 @@ def slpplotMaker(date, ensMean, ensStd, datefhour, dateArr, ssaAnom,
                  subsetPerc, totalPerc, pmm, lats, lons):
     extents=([-180, -50, 20, 65],'na')
     datefhour = int(datefhour)
-    colorsdiv = ((0.000, 0.655, 0.655, 1),
-                 (0.314, 0.773, 0.773, 1),
-                 (0.675, 0.875, 0.875, 1),
-                 (0.890, 0.957, 0.957, 1),
-                 (1.000, 1.000, 1.000, 0),
-                 (0.984, 0.925, 0.961, 1),
-                 (0.953, 0.792, 0.886, 1),
-                 (0.910, 0.620, 0.796, 1),
-                 (0.847, 0.396, 0.690, 1))
+    colorsdiv=((0.184, 0.314, 0.690,1),
+        (0.533, 0.576, 0.792,1),
+        (0.769, 0.788, 0.898,1),
+        (0.929, 0.937, 0.969,1),
+        (1.000, 1.000, 1.000,0),
+        (0.976, 0.925, 0.933,1),
+        (0.910, 0.753, 0.780,1),
+        (0.800, 0.502, 0.565,1),
+        (0.631, 0.153, 0.298,1))
 
     colors = ((255/255, 255/255, 255/255, 0),
               (236./255., 192./255., 0/255., 1),
@@ -106,10 +106,10 @@ def slpplotMaker(date, ensMean, ensStd, datefhour, dateArr, ssaAnom,
     cbar.remove()
 
 
-    cf = ax3.contourf(x,y,ssaAnom,[-8,-5,-3,-2,-1,1,2,3,5,8],
+    cf = ax3.contourf(x,y,ssaAnom,[-3,-2,-1.5,-1,-0.5,0.5,1,1.5,2,3],
                       transform=ccrs.PlateCarree(),colors=colorsdiv,zorder=2)
     c1=ax3.contour(x,y,ensMean/100,levels=mslspace,colors='k',linewidths=0.5,transform=ccrs.PlateCarree())
-    cbar=plt.colorbar(cf,ticks=[-8,-5,-3,-2,-1,1,2,3,5,8],
+    cbar=plt.colorbar(cf,ticks=[-3,-2,-1.5,-1,-0.5,0.5,1,1.5,2,3],
                       orientation='horizontal',pad=0.01,aspect=50)
     cbar.set_label('Standardized Anomaly (sigma)')
     clab = plt.clabel(c1,fontsize=10,inline_spacing=-0.5,fmt='%3.0f')
@@ -181,15 +181,15 @@ def tmpplotMaker(date, ensMean, ensStd, datefhour, dateArr, ssaAnom,
     extents=([-180, -50, 20, 65],'na')
     datefhour = int(datefhour)
 
-    colorsdiv = ((0.000, 0.655, 0.655, 1),
-                 (0.314, 0.773, 0.773, 1),
-                 (0.675, 0.875, 0.875, 1),
-                 (0.890, 0.957, 0.957, 1),
-                 (1.000, 1.000, 1.000, 0),
-                 (0.984, 0.925, 0.961, 1),
-                 (0.953, 0.792, 0.886, 1),
-                 (0.910, 0.620, 0.796, 1),
-                 (0.847, 0.396, 0.690, 1))
+    colorsdiv=((0.184, 0.314, 0.690,1),
+        (0.533, 0.576, 0.792,1),
+        (0.769, 0.788, 0.898,1),
+        (0.929, 0.937, 0.969,1),
+        (1.000, 1.000, 1.000,0),
+        (0.976, 0.925, 0.933,1),
+        (0.910, 0.753, 0.780,1),
+        (0.800, 0.502, 0.565,1),
+        (0.631, 0.153, 0.298,1))
     colors = ((255/255, 255/255, 255/255, 0), (236./255.,192./255.,0/255.,1), (232./255.,133./255.,58./255.,1),(210./255.,78./255.,113./255.,1),
               (171./255.,20./255.,136./255.,1), (114./255.,0.,141./255.,1), (10./255.,45./255.,110./255.,1))
      ##Default Variables
@@ -265,10 +265,10 @@ def tmpplotMaker(date, ensMean, ensStd, datefhour, dateArr, ssaAnom,
     cbar.remove()
 
 
-    cf = ax3.contourf(x,y,ssaAnom,[-8,-5,-3,-2,-1,1,2,3,5,8],
+    cf = ax3.contourf(x,y,ssaAnom,[-3,-2,-1,-0.5,0.5,1,2,3],
                       transform=ccrs.PlateCarree(),colors=colorsdiv,zorder=2)
     c1=ax3.contour(x,y,ensMean,levels=tmpspace,colors='k',linewidths=0.5,transform=ccrs.PlateCarree())
-    cbar=plt.colorbar(cf,ticks=[-8,-5,-3,-2,-1,1,2,3,5,8],
+    cbar=plt.colorbar(cf,ticks=[-3,-2,-1,-0.5,0.5,1,2,3],
                       orientation='horizontal',pad=0.01,aspect=50)
     cbar.set_label('Standardized Anomaly (sigma)')
     c1.collections[np.where(c1.levels==0)[0][0]].set_linewidth(0.9)
@@ -355,15 +355,15 @@ def hgtplotMaker(date, ensMean, ensStd, datefhour, dateArr, ssaAnom,
                  subsetPerc, totalPerc, pmm, lats, lons):
     extents=([-180, -50, 20, 65],'na')
     datefhour = int(datefhour)
-    colorsdiv = ((0.000, 0.655, 0.655, 1),
-                 (0.314, 0.773, 0.773, 1),
-                 (0.675, 0.875, 0.875, 1),
-                 (0.890, 0.957, 0.957, 1),
-                 (1.000, 1.000, 1.000, 0),
-                 (0.984, 0.925, 0.961, 1),
-                 (0.953, 0.792, 0.886, 1),
-                 (0.910, 0.620, 0.796, 1),
-                 (0.847, 0.396, 0.690, 1))
+    colorsdiv=((0.184, 0.314, 0.690,1),
+        (0.533, 0.576, 0.792,1),
+        (0.769, 0.788, 0.898,1),
+        (0.929, 0.937, 0.969,1),
+        (1.000, 1.000, 1.000,0),
+        (0.976, 0.925, 0.933,1),
+        (0.910, 0.753, 0.780,1),
+        (0.800, 0.502, 0.565,1),
+        (0.631, 0.153, 0.298,1))
 
     colors = ((255/255, 255/255, 255/255, 0), (236./255.,192./255.,0/255.,1), (232./255.,133./255.,58./255.,1),(210./255.,78./255.,113./255.,1),
               (171./255.,20./255.,136./255.,1), (114./255.,0.,141./255.,1), (10./255.,45./255.,110./255.,1))
@@ -431,10 +431,10 @@ def hgtplotMaker(date, ensMean, ensStd, datefhour, dateArr, ssaAnom,
     cbar.remove()
 
 
-    cf = ax3.contourf(x,y,ssaAnom,[-8,-5,-3,-2,-1,1,2,3,5,8],
+    cf = ax3.contourf(x,y,ssaAnom,[-3,-2,-1,-0.5,0.5,1,2,3],
                       transform=ccrs.PlateCarree(),colors=colorsdiv,zorder=2)
     c1=ax3.contour(x,y,ensMean/10,levels=hgtspace,colors='k',linewidths=0.5,transform=ccrs.PlateCarree())
-    cbar=plt.colorbar(cf,ticks=[-8,-5,-3,-2,-1,1,2,3,5,8],
+    cbar=plt.colorbar(cf,ticks=[-3,-2,-1,-0.5,0.5,1,2,3],
                       orientation='horizontal',pad=0.01,aspect=50)
     cbar.set_label('Standardized Anomaly (sigma)')
     clab = plt.clabel(c1,fontsize=10,inline_spacing=-0.5,fmt='%3.0f')
@@ -509,15 +509,15 @@ def pwatplotMaker(date, ensMean, ensStd, datefhour, dateArr, ssaAnom,
 
     datefhour = int(datefhour)
 
-    colorsdiv = ((0.000, 0.655, 0.655, 1),
-                 (0.314, 0.773, 0.773, 1),
-                 (0.675, 0.875, 0.875, 1),
-                 (0.890, 0.957, 0.957, 1),
-                 (1.000, 1.000, 1.000, 0),
-                 (0.984, 0.925, 0.961, 1),
-                 (0.953, 0.792, 0.886, 1),
-                 (0.910, 0.620, 0.796, 1),
-                 (0.847, 0.396, 0.690, 1))
+    colorsdiv=((0.184, 0.314, 0.690,1),
+        (0.533, 0.576, 0.792,1),
+        (0.769, 0.788, 0.898,1),
+        (0.929, 0.937, 0.969,1),
+        (1.000, 1.000, 1.000,0),
+        (0.976, 0.925, 0.933,1),
+        (0.910, 0.753, 0.780,1),
+        (0.800, 0.502, 0.565,1),
+        (0.631, 0.153, 0.298,1))
     colors = ((255/255, 255/255, 255/255, 0), (236./255.,192./255.,0/255.,1), (232./255.,133./255.,58./255.,1),(210./255.,78./255.,113./255.,1),
               (171./255.,20./255.,136./255.,1), (114./255.,0.,141./255.,1), (10./255.,45./255.,110./255.,1))
      ##Default Variables
@@ -585,10 +585,10 @@ def pwatplotMaker(date, ensMean, ensStd, datefhour, dateArr, ssaAnom,
 
 
 
-    cf = ax3.contourf(x,y,ssaAnom,[-8,-5,-3,-2,-1,1,2,3,5,8],
+    cf = ax3.contourf(x,y,ssaAnom,[-3,-2,-1,-0.5,0.5,1,2,3],
                       transform=ccrs.PlateCarree(),colors=colorsdiv,zorder=2)
     c1=ax3.contour(x,y,ensMean,levels=pwatspace,colors='k',linewidths=1.2,transform=ccrs.PlateCarree())
-    cbar=plt.colorbar(cf,ticks=[-8,-5,-3,-2,-1,1,2,3,5,8],
+    cbar=plt.colorbar(cf,ticks=[-3,-2,-1,-0.5,0.5,1,2,3],
                       orientation='horizontal',pad=0.01,aspect=50)
     cbar.set_label('Standardized Anomaly (sigma)')
     clab = plt.clabel(c1,fontsize=14,inline_spacing=-0.5,fmt='%3.0f',color='k')
@@ -965,15 +965,6 @@ def qpfplotMakerY(date, ensMean, ensStd, datefhour, dateArr, pmm, lats, lons):
 
     datefhour = int(datefhour)
 
-    colorsdiv = ((0.000, 0.655, 0.655, 1),
-                 (0.314, 0.773, 0.773, 1),
-                 (0.675, 0.875, 0.875, 1),
-                 (0.890, 0.957, 0.957, 1),
-                 (1.000, 1.000, 1.000, 0),
-                 (0.984, 0.925, 0.961, 1),
-                 (0.953, 0.792, 0.886, 1),
-                 (0.910, 0.620, 0.796, 1),
-                 (0.847, 0.396, 0.690, 1))
     colors = ((255/255, 255/255, 255/255, 0), (236./255.,192./255.,0/255.,1), (232./255.,133./255.,58./255.,1),(210./255.,78./255.,113./255.,1),
               (171./255.,20./255.,136./255.,1), (114./255.,0.,141./255.,1), (10./255.,45./255.,110./255.,1))
      ##Default Variables
