@@ -112,20 +112,33 @@ def mainfunc(token=0):
 
 def slpFuncY(mslpMean, mslpStd, mslppmm, datefhour, dateArr,
             lats, lons, date, ind):
-    
     subsetPerc = np.ones_like(mslpMean)
     totalPerc = np.ones_like(mslpMean)
     ssaAnom = np.ones_like(mslpMean)
-    if datetime.now().month >= 3 or datetime.now().month<=5:
+    saAnom = np.ones_like(mslpMean)
+    if datetime.now().month >= 3 and datetime.now().month<=5:
         mArr,sArr = mc.mcliLoad(var='mslp',ind=ind,notDJF='MAM')
+    elif datetime.now().month >= 6 and datetime.now().month<=8:
+        mArr,sArr = mc.mcliLoad(var='mslp',ind=ind,notDJF='JJA')
     else:
         mArr,sArr = mc.mcliLoad(var='mslp', ind=ind)
 
     for i in range(0, len(mslpMean)):
-        subsetPerc[i], totalPerc[i], ssaAnom[i] = mc.subsetMCli(mslpMean[i], mslpStd[i], mArr[:,i], sArr[:, i])
+        subsetPerc[i], totalPerc[i], ssaAnom[i], saAnom[i] = mc.subsetMCli(mslpMean[i], mslpStd[i], mArr[:,i], sArr[:, i])
+    
+    print 'completed SSA'
     print 'starting slp plots'
-    [pt.slpplotMakerY(date, mslpMean[i], mslpStd[i], datefhour[i],
-     dateArr[i],mslppmm[i], lats, lons) for i in range(0, len(mslpMean))]
+    if datetime.now().month >= 3 and datetime.now().month<=5:     
+        [pt.slpplotMaker(date, mslpMean[i], mslpStd[i], datefhour[i],
+     dateArr[i], ssaAnom[i], subsetPerc[i], totalPerc[i], mslppmm[i],
+     lats, lons) for i in range(0, len(mslpMean))]
+    elif datetime.now().month >= 6 and datetime.now().month<=8:
+        [pt.slpplotMaker(date, mslpMean[i], mslpStd[i], datefhour[i],
+     dateArr[i], ssaAnom[i], subsetPerc[i], totalPerc[i], mslppmm[i],
+     lats, lons) for i in range(0, len(mslpMean))]
+    else:
+        [pt.slpplotMakerY(date, mslpMean[i], mslpStd[i], datefhour[i],
+         dateArr[i],mslppmm[i], lats, lons) for i in range(0, len(mslpMean))]
     gc.collect()
 
 
@@ -153,7 +166,7 @@ def pwatFuncY(pwatMean, pwatStd, pwatpmm, datefhour, dateArr,
 
 def qpfFuncY(qpfMean, qpfStd, qpfpmm, datefhour, dateArr,
             lats, lons, date, ind):
-    print 'starting slp plots'
+    print 'starting qpf plots'
     [pt.qpfplotMakerY(date, qpfMean[i], qpfStd[i], datefhour[i],
      dateArr[i], qpfpmm[i], lats, lons) for i in range(0, len(qpfMean))]
     gc.collect()
@@ -163,12 +176,13 @@ def slpFunc(mslpMean, mslpStd, mslppmm, datefhour, dateArr,
     subsetPerc = np.ones_like(mslpMean)
     totalPerc = np.ones_like(mslpMean)
     ssaAnom = np.ones_like(mslpMean)
+    saAnom = np.ones_like(mslpMean)
     if datetime.now().month >= 3 or datetime.now().month<=5:
         mArr,sArr = mc.mcliLoad(var='mslp',ind=ind,notDJF='MAM')
     mArr,sArr = mc.mcliLoad(var='mslp', ind=ind)
 
     for i in range(0, len(mslpMean)):
-        subsetPerc[i], totalPerc[i], ssaAnom[i] = mc.subsetMCli(mslpMean[i], mslpStd[i], mArr[:,i], sArr[:, i])
+        subsetPerc[i], totalPerc[i], ssaAnom[i], saAnom[i] = mc.subsetMCli(mslpMean[i], mslpStd[i], mArr[:,i], sArr[:, i])
     print 'starting slp plots'
     [pt.slpplotMaker(date, mslpMean[i], mslpStd[i], datefhour[i],
      dateArr[i], ssaAnom[i], subsetPerc[i], totalPerc[i], mslppmm[i],
@@ -181,10 +195,11 @@ def tmpFunc(tmpMean, tmpStd, tmppmm, datefhour, dateArr,
     subsetPerc = np.ones_like(tmpMean)
     totalPerc = np.ones_like(tmpMean)
     ssaAnom = np.ones_like(tmpMean)
+    saAnom = np.ones_like(tmpMean)
     mArr,sArr = mc.mcliLoad(var='850tmp', ind=ind)
 
     for i in range(0, len(tmpMean)):
-        subsetPerc[i], totalPerc[i], ssaAnom[i] = mc.subsetMCli(tmpMean[i], tmpStd[i], mArr[:, i], sArr[:,i])
+        subsetPerc[i], totalPerc[i], ssaAnom[i], saAnom[i] = mc.subsetMCli(tmpMean[i], tmpStd[i], mArr[:, i], sArr[:,i])
     print 'starting tmp plots'
     [pt.tmpplotMaker(date, tmpMean[i], tmpStd[i], datefhour[i], dateArr[i], ssaAnom[i], subsetPerc[i], totalPerc[i], tmppmm[i], lats, lons)
      for i in range(0, len(tmpMean))]
@@ -196,9 +211,10 @@ def hgtFunc(hgtMean, hgtStd, hgtpmm, datefhour, dateArr,
     subsetPerc = np.ones_like(hgtMean)
     totalPerc = np.ones_like(hgtMean)
     ssaAnom = np.ones_like(hgtMean)
+    saAnom = np.ones_like(hgtMean)
     mArr,sArr = mc.mcliLoad(var='500hgt', ind=ind)
     for i in range(0, len(hgtMean)):
-        subsetPerc[i], totalPerc[i], ssaAnom[i] = mc.subsetMCli(hgtMean[i], hgtStd[i], mArr[:, i], sArr[:,i])
+        subsetPerc[i], totalPerc[i], ssaAnom[i],saAnom[i] = mc.subsetMCli(hgtMean[i], hgtStd[i], mArr[:, i], sArr[:,i])
     print 'starting hgt plots'
     [pt.hgtplotMaker(date, hgtMean[i], hgtStd[i], datefhour[i], dateArr[i], ssaAnom[i], subsetPerc[i], totalPerc[i], hgtpmm[i], lats, lons)
      for i in range(0, len(hgtMean))]
@@ -210,14 +226,16 @@ def pwatFunc(pwatMean, pwatStd, pwatpmm, datefhour, dateArr,
     subsetPerc = np.ones_like(pwatMean)
     totalPerc = np.ones_like(pwatMean)
     ssaAnom = np.ones_like(pwatMean)
+    saAnom = np.ones_like(pwatMean)
     mArr,sArr = mc.mcliLoad(var='pwat', ind=ind)
     for i in range(0, len(pwatMean)):
-        subsetPerc[i], totalPerc[i], ssaAnom[i] = mc.subsetMCli(pwatMean[i], pwatStd[i], mArr[:,i], sArr[:, i])
+        subsetPerc[i], totalPerc[i], ssaAnom[i],saAnom[i] = mc.subsetMCli(pwatMean[i], pwatStd[i], mArr[:,i], sArr[:, i])
     print 'starting pwat plots'
     [pt.pwatplotMaker(date, pwatMean[i], pwatStd[i], datefhour[i],
      dateArr[i], ssaAnom[i], subsetPerc[i], totalPerc[i], pwatpmm[i],
      lats, lons) for i in range(0, len(pwatMean))]
     gc.collect()
+
 if __name__ == "__main__":
     
     sns.set(font_scale=1.65, style="whitegrid", color_codes=True)
