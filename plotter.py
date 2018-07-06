@@ -75,7 +75,7 @@ def slpplotMaker(date, ensMean, ensStd, datefhour, dateArr, ssaAnom,
     if datefhour == 6 or datefhour == 0:
         plt.savefig('/home/taylorm/ssa/images/mslp/me/'+loc+'/init.png',
                     bbox_inches='tight')
-    plt.savefig('/home/taylorm/ssa/images/mslp/me/'+loc+'/'+date.strftime('%Y%m%d%H')
+    plt.savefig('/home/taylorm/ssa/images/mslp/me/'+loc+'/'
     +str(datefhour)+'me'+loc+'.png', bbox_inches='tight')
     for a in c1.collections:
         a.remove()
@@ -95,7 +95,7 @@ def slpplotMaker(date, ensMean, ensStd, datefhour, dateArr, ssaAnom,
     plt.title('GEFS Probability Matched Mean MSLP, Spread '+'\n'+date.strftime('%Y/%m/%d %Hz ')+ str(datefhour) +'h Forecast valid ' + dateArr.strftime('%Y/%m/%d %Hz'),loc='left')
     if datefhour == 6 or datefhour == 0:
         plt.savefig('/home/taylorm/ssa/images/mslp/pmm/'+loc+'/init.png',bbox_inches='tight')
-    plt.savefig('/home/taylorm/ssa/images/mslp/pmm/'+loc+'/'+date.strftime('%Y%m%d%H')+
+    plt.savefig('/home/taylorm/ssa/images/mslp/pmm/'+loc+'/'+
                 str(datefhour)+'pmm'+loc+'.png',bbox_inches='tight')
     for a in c1.collections:
         a.remove()
@@ -117,7 +117,7 @@ def slpplotMaker(date, ensMean, ensStd, datefhour, dateArr, ssaAnom,
               str(datefhour) +'h Forecast valid ' + dateArr.strftime('%Y/%m/%d %Hz '),loc='left')
     if datefhour == 6 or datefhour == 0:
         plt.savefig('/home/taylorm/ssa/images/mslp/ssa/'+loc+'/init.png',bbox_inches='tight')
-    plt.savefig('/home/taylorm/ssa/images/mslp/ssa/'+loc+'/'+date.strftime('%Y%m%d%H')+
+    plt.savefig('/home/taylorm/ssa/images/mslp/ssa/'+loc+'/'+
                 str(datefhour)+'ssa'+loc+'.png',bbox_inches='tight')
 
     for a in c1.collections:
@@ -142,7 +142,7 @@ def slpplotMaker(date, ensMean, ensStd, datefhour, dateArr, ssaAnom,
     plt.title('Spread Percentile (Restricted M-Climate), '+date.strftime('%Y/%m/%d %Hz ')+'\n'+str(datefhour) +'h Forecast valid ' + dateArr.strftime('%Y/%m/%d %Hz '),loc='left')
     if datefhour == 6 or datefhour == 0:
         plt.savefig('/home/taylorm/ssa/images/mslp/subsetperc/'+loc+'/init.png',bbox_inches='tight')
-    plt.savefig('/home/taylorm/ssa/images/mslp/subsetperc/'+loc+'/'+date.strftime('%Y%m%d%H')+
+    plt.savefig('/home/taylorm/ssa/images/mslp/subsetperc/'+loc+'/'+
                 str(datefhour)+'sP'+loc+'.png',bbox_inches='tight')
     for a in c1.collections:
         a.remove()
@@ -160,7 +160,7 @@ def slpplotMaker(date, ensMean, ensStd, datefhour, dateArr, ssaAnom,
     plt.title('Spread Percentile (All M-Climate), '+date.strftime('%Y/%m/%d %Hz ')+'\n'+str(datefhour) +'h Forecast valid ' + dateArr.strftime('%Y/%m/%d %Hz '),loc='left')
     if datefhour == 6 or datefhour == 0:
         plt.savefig('/home/taylorm/ssa/images/mslp/totalperc/'+loc+'/init.png',bbox_inches='tight')
-    plt.savefig('/home/taylorm/ssa/images/mslp/totalperc/'+loc+'/'+date.strftime('%Y%m%d%H')+
+    plt.savefig('/home/taylorm/ssa/images/mslp/totalperc/'+loc+'/'+
                 str(datefhour)+'tP'+loc+'.png',bbox_inches='tight')
     for a in c1.collections:
         a.remove()
@@ -227,7 +227,7 @@ def tmpplotMaker(date, ensMean, ensStd, datefhour, dateArr, ssaAnom,
               str(datefhour) +'h Forecast valid ' + dateArr.strftime('%Y/%m/%d %Hz '),loc='left')
     if datefhour == 6 or datefhour == 0:
         plt.savefig('/home/taylorm/ssa/images/tmp/me/'+loc+'/init.png',bbox_inches='tight')
-    plt.savefig('/home/taylorm/ssa/images/tmp/me/'+loc+'/'+date.strftime('%Y%m%d%H')+
+    plt.savefig('/home/taylorm/ssa/images/tmp/me/'+loc+'/'+
                 str(datefhour)+'me'+loc+'.png',bbox_inches='tight')
     for a in c1.collections:
         a.remove()
@@ -254,7 +254,7 @@ def tmpplotMaker(date, ensMean, ensStd, datefhour, dateArr, ssaAnom,
               str(datefhour) +'h Forecast valid ' + dateArr.strftime('%Y/%m/%d %Hz '),loc='left')
     if datefhour == 6 or datefhour == 0:
         plt.savefig('/home/taylorm/ssa/images/tmp/pmm/'+loc+'/init.png',bbox_inches='tight')
-    plt.savefig('/home/taylorm/ssa/images/tmp/pmm/'+loc+'/'+date.strftime('%Y%m%d%H')+
+    plt.savefig('/home/taylorm/ssa/images/tmp/pmm/'+loc+'/'+
                 str(datefhour)+'pmm'+loc+'.png',bbox_inches='tight')
     for a in c1.collections:
         a.remove()
@@ -281,7 +281,7 @@ def tmpplotMaker(date, ensMean, ensStd, datefhour, dateArr, ssaAnom,
               str(datefhour) +'h Forecast valid ' + dateArr.strftime('%Y/%m/%d %Hz '),loc='left')
     if datefhour == 6 or datefhour == 0:
         plt.savefig('/home/taylorm/ssa/images/tmp/ssa/'+loc+'/init.png',bbox_inches='tight')
-    plt.savefig('/home/taylorm/ssa/images/tmp/ssa/'+loc+'/'+date.strftime('%Y%m%d%H')+
+    plt.savefig('/home/taylorm/ssa/images/tmp/ssa/'+loc+'/'+
                 str(datefhour)+'ssa'+loc+'.png',bbox_inches='tight')
 
     for a in c1.collections:
@@ -311,7 +311,7 @@ def tmpplotMaker(date, ensMean, ensStd, datefhour, dateArr, ssaAnom,
     plt.title('Spread Percentile (Restricted M-Climate), '+date.strftime('%Y/%m/%d %Hz ')+'\n'+str(datefhour) +'h Forecast valid ' + dateArr.strftime('%Y/%m/%d %Hz '),loc='left')
     if datefhour == 6 or datefhour == 0:
         plt.savefig('/home/taylorm/ssa/images/tmp/subsetperc/'+loc+'/init.png',bbox_inches='tight')
-    plt.savefig('/home/taylorm/ssa/images/tmp/subsetperc/'+loc+'/'+date.strftime('%Y%m%d%H')+
+    plt.savefig('/home/taylorm/ssa/images/tmp/subsetperc/'+loc+'/'+
                 str(datefhour)+'sP'+loc+'.png',bbox_inches='tight')
     for a in c1.collections:
         a.remove()
@@ -335,7 +335,7 @@ def tmpplotMaker(date, ensMean, ensStd, datefhour, dateArr, ssaAnom,
     plt.title('Spread Percentile (All M-Climate), '+date.strftime('%Y/%m/%d %Hz ')+'\n'+str(datefhour) +'h Forecast valid ' + dateArr.strftime('%Y/%m/%d %Hz '),loc='left')
     if datefhour == 6 or datefhour == 0:
         plt.savefig('/home/taylorm/ssa/images/tmp/totalperc/'+loc+'/init.png',bbox_inches='tight')
-    plt.savefig('/home/taylorm/ssa/images/tmp/totalperc/'+loc+'/'+date.strftime('%Y%m%d%H')+
+    plt.savefig('/home/taylorm/ssa/images/tmp/totalperc/'+loc+'/'+
                 str(datefhour)+'tP'+loc+'.png',bbox_inches='tight')
     for a in c1.collections:
         a.remove()
@@ -399,8 +399,7 @@ def hgtplotMaker(date, ensMean, ensStd, datefhour, dateArr, ssaAnom,
     if datefhour == 6 or datefhour == 0:
         plt.savefig('/home/taylorm/ssa/images/hgt/me/'+loc+'/init.png',
                     bbox_inches='tight')
-    plt.savefig('/home/taylorm/ssa/images/hgt/me/'+loc+'/'+date.strftime('%Y%m%d%H')
-    +str(datefhour)+'me'+loc+'.png',bbox_inches='tight')
+    plt.savefig('/home/taylorm/ssa/images/hgt/me/'+loc+'/'+str(datefhour)+'me'+loc+'.png',bbox_inches='tight')
     for a in c1.collections:
         a.remove()
     for a in cf.collections:
@@ -420,7 +419,7 @@ def hgtplotMaker(date, ensMean, ensStd, datefhour, dateArr, ssaAnom,
     plt.title('GEFS Probability Matched Mean 500mb Hgts, Spread '+'\n'+date.strftime('%Y/%m/%d %Hz ')+ str(datefhour) +'h Forecast valid ' + dateArr.strftime('%Y/%m/%d %Hz'),loc='left')
     if datefhour == 6 or datefhour == 0:
         plt.savefig('/home/taylorm/ssa/images/hgt/pmm/'+loc+'/init.png',bbox_inches='tight')
-    plt.savefig('/home/taylorm/ssa/images/hgt/pmm/'+loc+'/'+date.strftime('%Y%m%d%H')+
+    plt.savefig('/home/taylorm/ssa/images/hgt/pmm/'+loc+'/'+
                 str(datefhour)+'pmm'+loc+'.png',bbox_inches='tight')
     for a in c1.collections:
         a.remove()
@@ -442,7 +441,7 @@ def hgtplotMaker(date, ensMean, ensStd, datefhour, dateArr, ssaAnom,
               str(datefhour) +'h Forecast valid ' + dateArr.strftime('%Y/%m/%d %Hz '),loc='left')
     if datefhour == 6 or datefhour == 0:
         plt.savefig('/home/taylorm/ssa/images/hgt/ssa/'+loc+'/init.png',bbox_inches='tight')
-    plt.savefig('/home/taylorm/ssa/images/hgt/ssa/'+loc+'/'+date.strftime('%Y%m%d%H')+
+    plt.savefig('/home/taylorm/ssa/images/hgt/ssa/'+loc+'/'+
                 str(datefhour)+'ssa'+loc+'.png',bbox_inches='tight')
 
     for a in c1.collections:
@@ -468,7 +467,7 @@ def hgtplotMaker(date, ensMean, ensStd, datefhour, dateArr, ssaAnom,
     plt.title('Spread Percentile (Restricted M-Climate), '+date.strftime('%Y/%m/%d %Hz ')+'\n'+str(datefhour) +'h Forecast valid ' + dateArr.strftime('%Y/%m/%d %Hz '),loc='left')
     if datefhour == 6 or datefhour == 0:
         plt.savefig('/home/taylorm/ssa/images/hgt/subsetperc/'+loc+'/init.png',bbox_inches='tight')
-    plt.savefig('/home/taylorm/ssa/images/hgt/subsetperc/'+loc+'/'+date.strftime('%Y%m%d%H')+
+    plt.savefig('/home/taylorm/ssa/images/hgt/subsetperc/'+loc+'/'+
                 str(datefhour)+'sP'+loc+'.png',bbox_inches='tight')
     for a in c1.collections:
         a.remove()
@@ -487,7 +486,7 @@ def hgtplotMaker(date, ensMean, ensStd, datefhour, dateArr, ssaAnom,
     plt.title('Spread Percentile (All M-Climate), '+date.strftime('%Y/%m/%d %Hz ')+'\n'+str(datefhour) +'h Forecast valid ' + dateArr.strftime('%Y/%m/%d %Hz '),loc='left')
     if datefhour == 6 or datefhour == 0:
         plt.savefig('/home/taylorm/ssa/images/hgt/totalperc/'+loc+'/init.png',bbox_inches='tight')
-    plt.savefig('/home/taylorm/ssa/images/hgt/totalperc/'+loc+'/'+date.strftime('%Y%m%d%H')+
+    plt.savefig('/home/taylorm/ssa/images/hgt/totalperc/'+loc+'/'+
                 str(datefhour)+'tP'+loc+'.png',bbox_inches='tight')
     for a in c1.collections:
         a.remove()
@@ -549,7 +548,7 @@ def pwatplotMaker(date, ensMean, ensStd, datefhour, dateArr, ssaAnom,
               str(datefhour) +'h Forecast valid ' + dateArr.strftime('%Y/%m/%d %Hz '),loc='left')
     if datefhour == 6 or datefhour == 0:
         plt.savefig('/home/taylorm/ssa/images/pwat/me/'+loc+'/init.png',bbox_inches='tight')
-    plt.savefig('/home/taylorm/ssa/images/pwat/me/'+loc+'/'+date.strftime('%Y%m%d%H')+
+    plt.savefig('/home/taylorm/ssa/images/pwat/me/'+loc+'/'+
                 str(datefhour)+'me'+loc+'.png',bbox_inches='tight')
     for a in c1.collections:
         a.remove()
@@ -572,7 +571,7 @@ def pwatplotMaker(date, ensMean, ensStd, datefhour, dateArr, ssaAnom,
               str(datefhour) +'h Forecast valid ' + dateArr.strftime('%Y/%m/%d %Hz '),loc='left')
     if datefhour == 6 or datefhour == 0:
         plt.savefig('/home/taylorm/ssa/images/pwat/pmm/'+loc+'/init.png',bbox_inches='tight')
-    plt.savefig('/home/taylorm/ssa/images/pwat/pmm/'+loc+'/'+date.strftime('%Y%m%d%H')+
+    plt.savefig('/home/taylorm/ssa/images/pwat/pmm/'+loc+'/'+
                 str(datefhour)+'pmm'+loc+'.png',bbox_inches='tight')
     for a in c1.collections:
         a.remove()
@@ -596,7 +595,7 @@ def pwatplotMaker(date, ensMean, ensStd, datefhour, dateArr, ssaAnom,
               str(datefhour) +'h Forecast valid ' + dateArr.strftime('%Y/%m/%d %Hz '),loc='left')
     if datefhour == 6 or datefhour == 0:
         plt.savefig('/home/taylorm/ssa/images/pwat/ssa/'+loc+'/init.png',bbox_inches='tight')
-    plt.savefig('/home/taylorm/ssa/images/pwat/ssa/'+loc+'/'+date.strftime('%Y%m%d%H')+
+    plt.savefig('/home/taylorm/ssa/images/pwat/ssa/'+loc+'/'+
                 str(datefhour)+'ssa'+loc+'.png',bbox_inches='tight')
 
     for a in c1.collections:
@@ -621,7 +620,7 @@ def pwatplotMaker(date, ensMean, ensStd, datefhour, dateArr, ssaAnom,
     plt.title('Spread Percentile (Restricted M-Climate), '+date.strftime('%Y/%m/%d %Hz ')+'\n'+str(datefhour) +'h Forecast valid ' + dateArr.strftime('%Y/%m/%d %Hz '),loc='left')
     if datefhour == 6 or datefhour == 0:
         plt.savefig('/home/taylorm/ssa/images/pwat/subsetperc/'+loc+'/init.png',bbox_inches='tight')
-    plt.savefig('/home/taylorm/ssa/images/pwat/subsetperc/'+loc+'/'+date.strftime('%Y%m%d%H')+
+    plt.savefig('/home/taylorm/ssa/images/pwat/subsetperc/'+loc+'/'+
                 str(datefhour)+'sP'+loc+'.png',bbox_inches='tight')
     for a in c1.collections:
         a.remove()
@@ -640,7 +639,7 @@ def pwatplotMaker(date, ensMean, ensStd, datefhour, dateArr, ssaAnom,
     plt.title('Spread Percentile (All M-Climate), '+date.strftime('%Y/%m/%d %Hz ')+'\n'+str(datefhour) +'h Forecast valid ' + dateArr.strftime('%Y/%m/%d %Hz '),loc='left')
     if datefhour == 6 or datefhour == 0:
         plt.savefig('/home/taylorm/ssa/images/pwat/totalperc/'+loc+'/init.png',bbox_inches='tight')
-    plt.savefig('/home/taylorm/ssa/images/pwat/totalperc/'+loc+'/'+date.strftime('%Y%m%d%H')+
+    plt.savefig('/home/taylorm/ssa/images/pwat/totalperc/'+loc+'/'+
                 str(datefhour)+'tP'+loc+'.png',bbox_inches='tight')
     for a in c1.collections:
         a.remove()
