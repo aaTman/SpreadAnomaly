@@ -18,6 +18,7 @@ import pdb
 import gc
 from bisect import bisect
 from scipy.ndimage.filters import gaussian_filter
+
 # Pulled percentileofscore from scipy.stats due to a missing module, documentation
 # available in the scipy user guide/api reference.
 def percentileofscore(a, score, kind='rank'):
@@ -50,7 +51,7 @@ def percentileofscore(a, score, kind='rank'):
 # run into a log file and this checks if it already completed.
 def GEFScheck(init=0):
     if init == 1:
-        url1 = 'http://thredds.ucar.edu/thredds/catalog/grib/NCEP/GEFS/Global_1p0deg_Ensemble/members/latest.html'
+        url1 = 'http://thredds-jumbo.unidata.ucar.edu/thredds/catalog/grib/NCEP/GEFS/Global_1p0deg_Ensemble/members/latest.html'
 
         # Play games with the url to get the TDSCatalog for siphon
         response = requests.get(url1)
@@ -62,6 +63,7 @@ def GEFScheck(init=0):
         url = page[start_quote + 1: end_quote]
 
         url = url.split('html')
+
         endurl = url[1]
 
         # load in year and month as string
@@ -91,7 +93,7 @@ def GEFScheck(init=0):
 
             
         # load the thredds latest GEFS run
-        url1 = 'http://thredds.ucar.edu/thredds/catalog/grib/NCEP/GEFS/Global_1p0deg_Ensemble/members/latest.html'
+        url1 = 'http://thredds-jumbo.unidata.ucar.edu/thredds/catalog/grib/NCEP/GEFS/Global_1p0deg_Ensemble/members/latest.html'
 
         # Play games with the url to get the TDSCatalog for siphon
         response = requests.get(url1)
@@ -170,7 +172,6 @@ def liveLoad(wlon=180, elon=310, slat=20, nlat=80):
     print 'loading GEFS file'
     dateArr, date1, mslpMean, mslpStd, mslppmm, lats, lons, tmpMean, tmpStd, hgtMean, hgtStd, tmppmm, hgtpmm,qpfMean, qpfStd, qpfpmm, pwatMean, pwatStd, pwatpmm = GEFSload()
 
-
     print 'loaded GEFS file'
     liveDate = datetime.strptime(date1, "%Y%m%d%H")
 
@@ -184,51 +185,71 @@ def liveLoad(wlon=180, elon=310, slat=20, nlat=80):
     
 def subsetMCli(fcstm, fcsts, m630, s630):
 
-    mstdgrid = np.ones_like(fcstm)
-    mmngrid = np.ones_like(fcstm)
-    pgrid = np.ones_like(fcstm)
-    bsgrid = np.ones_like(fcstm)
-    stdgrid = np.ones_like(fcstm)
-    mngrid = np.ones_like(fcstm)
-    for y in range(0, np.shape(fcstm)[-2]):
-        for z in range(0, np.shape(fcstm)[-1]):
-            marg = m630[:, y, z].argsort()
-            mbins = m630[marg, y, z]
-            sbins = s630[marg, y, z]
-            leng = len(mbins)
-            centRange = bisect(mbins.tolist(), fcstm[y, z])
-            stdgrid[y, z] = np.std(sbins)
-            mngrid[y, z] = np.mean(sbins)
-            if centRange <= leng/10:
-                subsetSpread = sbins[0:leng/10]
-                pgrid[y, z] = percentileofscore(subsetSpread, fcsts[y, z])
-                mstdgrid[y, z] = np.std(subsetSpread)
-                mmngrid[y, z] = np.mean(subsetSpread)
-            elif centRange >= leng-leng/10:
-                subsetSpread = sbins[leng-leng/10:]
-                pgrid[y, z] = percentileofscore(subsetSpread, fcsts[y, z])
-                mstdgrid[y, z] = np.std(subsetSpread)
-                mmngrid[y, z] = np.mean(subsetSpread)
-            else:
-                subsetSpread = sbins[centRange-leng/20:centRange+leng/20]
-                pgrid[y, z] = percentileofscore(subsetSpread, fcsts[y, z])
-                mstdgrid[y, z] = np.std(subsetSpread)
-                mmngrid[y, z] = np.mean(subsetSpread)
+        mstdgrid = np.ones_like(fcstm)
+        mmngrid = np.ones_like(fcstm)
+        pgrid = np.ones_like(fcstm)
+        bsgrid = np.ones_like(fcstm)
+        fsprd = np.ones_like(fcsts)
+        for y in range(0, np.shape(fcstm)[-2]):
+            for z in range(0, np.shape(fcstm)[-1]):
+                
+                
+            
+                
 
-            bsgrid[y, z] = percentileofscore(sbins, fcsts[y, z])
-    saAnom = ((fcsts-(mngrid))/stdgrid)
-    ssaAnom = (fcsts - mmngrid)/mstdgrid
-    sanlt = np.array([(0.99-(-0.99))*(ssaAnom[n]-np.min(ssaAnom[n]))/(np.max(ssaAnom[n])-np.min(ssaAnom[n])) + -0.99 for n in range(0,len(ssaAnom))]).reshape(*ssaAnom.shape)
-    sanlt = np.arctanh(sanlt)
-    saAnomSanlt = np.array([(0.99-(-0.99))*(ssaAnom[n]-np.min(ssaAnom[n]))/(np.max(ssaAnom[n])-np.min(ssaAnom[n])) + -0.99 for n in range(0,len(ssaAnom))]).reshape(*saAnom.shape)
-    saAnomSanlt = np.arctanh(saAnomSanlt)
-    sanltg = gaussian_filter(sanlt,1)
-    saAnomSanltg = gaussian_filter(saAnomSanlt,1)
-    pgrid = gaussian_filter(pgrid,1)
-    bsgrid = gaussian_filter(bsgrid,1)
-    gc.collect()
-    return pgrid, bsgrid, sanltg,saAnomSanltg
+                m6301 = m630[:,y,z]
+                s6301 = s630[:,y,z]
 
+                marg = m6301.argsort()
+                mbins = m6301[marg]
+                sbins = s6301[marg]
+                leng = len(mbins)
+                centRange = bisect(mbins.tolist(), fcstm[y, z])
+
+                if centRange <= leng/10:
+
+                    subsetSpread = sbins[0:leng/10]
+                    subsetSpread = np.append(subsetSpread,fcsts[y,z])
+                    subsetSpread = (0.99-(-0.99))*(subsetSpread-np.min(subsetSpread))/(np.max(subsetSpread)-np.min(subsetSpread)) + -0.99
+
+                    subsetSpread = np.arctanh(subsetSpread)
+                    fsprd[y,z] = subsetSpread[-1]
+
+                    pgrid[y, z] = percentileofscore(subsetSpread, subsetSpread[-1])
+                    mstdgrid[y, z] = np.std(subsetSpread)
+                    mmngrid[y, z] = np.mean(subsetSpread)
+                elif centRange >= leng-leng/10:
+
+                    subsetSpread = sbins[leng-leng/10:]
+                    subsetSpread = np.append(subsetSpread,fcsts[y,z])
+                    subsetSpread =(0.99-(-0.99))*(subsetSpread-np.min(subsetSpread))/(np.max(subsetSpread)-np.min(subsetSpread)) + -0.99
+
+                    subsetSpread = np.arctanh(subsetSpread)
+ 
+                    fsprd[y,z] = subsetSpread[-1]
+                    pgrid[y, z] = percentileofscore(subsetSpread, subsetSpread[-1])
+                    mstdgrid[y, z] = np.std(subsetSpread)
+                    mmngrid[y, z] = np.mean(subsetSpread)
+                else:
+
+                    subsetSpread = sbins[centRange-leng/20:centRange+leng/20]
+                    subsetSpread = np.append(subsetSpread,fcsts[y,z])
+                    subsetSpread = (0.99-(-0.99))*(subsetSpread-np.min(subsetSpread))/(np.max(subsetSpread)-np.min(subsetSpread)) + -0.99
+
+                    subsetSpread = np.arctanh(subsetSpread)
+                    fsprd[y,z] = subsetSpread[-1]
+
+                    pgrid[y, z] = percentileofscore(subsetSpread, subsetSpread[-1])
+                    mstdgrid[y, z] = np.std(subsetSpread)
+                    mmngrid[y, z] = np.mean(subsetSpread)
+                bsgrid[y, z] = percentileofscore(sbins, fcsts[y, z])
+                
+        
+
+        sanltgs = gaussian_filter(fsprd,1)
+        pgrid = gaussian_filter(pgrid,1)
+        bsgrid = gaussian_filter(bsgrid,1)
+        return pgrid, bsgrid, sanltgs
 # Loads the M-Climate data using the indices obtained in the liveLoad function.
 # Some of the args are used for testing and are not intended for live usage.
 def mcliLoad(var=None, time=None, ind=None,notDJF=None):
@@ -328,59 +349,59 @@ def pmm(ens):
 # Loads GEFS real-time data from THREDDS using siphon.
 # PMM is also called here.
 
-def GEFSload(wlon=180, elon=310, slat=20, nlat=80):
+def GEFSload(wlon=180, elon=320, slat=20, nlat=80):
     # Initialize current time variable
     now = datetime.now()
-
+    
     # load the thredds latest GEFS run
     url1 = 'http://thredds.ucar.edu/thredds/catalog/grib/NCEP/GEFS/Global_1p0deg_Ensemble/members/latest.html'
+    url2 = 'http://thredds-jumbo.unidata.ucar.edu/thredds/catalog/grib/NCEP/GEFS/Global_1p0deg_Ensemble/members/latest.html'
 
     # Play games with the url to get the TDSCatalog for siphon
-    response = requests.get(url1)
+    response = requests.get(url2)
     page = str(BeautifulSoup(response.content, 'lxml'))
     start_link = page.find("a href")
-
+    
     start_quote = page.find('"', start_link)
     end_quote = page.find('"', start_quote + 1)
     url = page[start_quote + 1: end_quote]
-
+    
     url = url.split('html')
     endurl = url[1]
-
+    
     # get the TDSCatalog file
-    gefs = catalog.TDSCatalog(url1+endurl)
+    gefs = catalog.TDSCatalog(url2+endurl)
     ds = list(gefs.datasets.values())[0]
-
+    
     # Pull the netcdf subset
-    ncssl = ncss.NCSS(ds.access_urls['NetcdfSubset'])
 
+    ncssl = ncss.NCSS(ds.access_urls['NetcdfSubset'])
+    
     query = ncssl.query()
     # print the run that was loaded
     print 'obtained ' + endurl[83:94] + 'z run'
-
+    
     # load in year and month as string
     year = endurl[83:87]
     month = endurl[87:89]
-
+    
     print 'taking time range from ' + str(now) + ' to ' + str(now+timedelta(days=6.75))
-
+    
     # Load in run and day as string
     run = endurl[92:94]
     day = endurl[89:91]
-
+    
     # take only the latlon box, netcdf4 file, and the mentioned variables,
     # then assign them to variables
     query.lonlat_box(wlon, elon, slat,
                      nlat).time_range(now, now+timedelta(days=7))
-
+    
     query.accept('netcdf4')
     query.variables('Pressure_reduced_to_MSL_msl_ens',
-                    'Temperature_isobaric_ens',
-                    'Geopotential_height_isobaric_ens',
                     'Precipitable_water_entire_atmosphere_single_layer_ens',
                     'Total_precipitation_surface_6_Hour_Accumulation_ens')
     data = ncssl.get_data(query)
-
+    
     try:
         dateArr = data.variables['time2'][:]
     except KeyError:
@@ -394,21 +415,41 @@ def GEFSload(wlon=180, elon=310, slat=20, nlat=80):
                     dateArr = data.variables['time3'][:]
                 except KeyError:
                     pdb.set_trace()
-    qpf = data.variables['Total_precipitation_surface_6_Hour_Accumulation_ens'][:]
-    pwat = data.variables['Precipitable_water_entire_atmosphere_single_layer_ens'][:]
-    mslp = data.variables['Pressure_reduced_to_MSL_msl_ens'][:]
-    lats = data.variables['lat'][:]
-    lons = data.variables['lon'][:]
-
-
-    tmps = data.variables['Temperature_isobaric_ens'][:]
-    tmps = np.squeeze(tmps[:, :, np.where(data.variables['isobaric2'][:]
-                           == 85000), ...])
-    hgt = data.variables['Geopotential_height_isobaric_ens'][:]
-    hgt = np.squeeze(hgt[:, :, np.where(data.variables['isobaric2'][:]
-                         == 50000), ...])
-
-
+    try:
+        qpf = data.variables['Total_precipitation_surface_6_Hour_Accumulation_ens'][dateArr!=174.0]  # In case hr 174 pops in for timing reasons, otherwise this will be unaffected
+        pwat = data.variables['Precipitable_water_entire_atmosphere_single_layer_ens'][dateArr!=174.0]
+        mslp = data.variables['Pressure_reduced_to_MSL_msl_ens'][dateArr!=174.0]
+    except IndexError:
+        qpf = data.variables['Total_precipitation_surface_6_Hour_Accumulation_ens'][:] 
+        pwat = data.variables['Precipitable_water_entire_atmosphere_single_layer_ens'][:]
+        mslp = data.variables['Pressure_reduced_to_MSL_msl_ens'][:]
+    lats = data.variables['latitude'][:]
+    lons = data.variables['longitude'][:]
+    dateArr = dateArr[dateArr!=174.0]
+    
+    query =ncssl.query()
+    query.lonlat_box(wlon, elon, slat,
+                     nlat).time_range(now, now+timedelta(days=7)).vertical_level(50000)
+    
+    query.accept('netcdf4')
+    query.variables('Geopotential_height_isobaric_ens')
+    data = ncssl.get_data(query)
+    try:
+        hgt = np.squeeze(data.variables['Geopotential_height_isobaric_ens'][dateArr!=174.0])
+    except IndexError:
+        hgt = np.squeeze(data.variables['Geopotential_height_isobaric_ens'][:])
+    query =ncssl.query()
+    query.lonlat_box(wlon, elon, slat,
+                     nlat).time_range(now, now+timedelta(days=7)).vertical_level(85000)
+    
+    query.accept('netcdf4')
+    query.variables('Temperature_isobaric_ens')
+    data = ncssl.get_data(query)
+    try:
+        tmps = np.squeeze(data.variables['Temperature_isobaric_ens'][dateArr!=174.0])
+    except IndexError:
+        tmps = np.squeeze(data.variables['Temperature_isobaric_ens'][:])
+    print 'time took: {:2.1f}'.format((datetime.now() - now).total_seconds())
     # pwat=data.variables['Precipitable_water_entire_atmosphere_single_layer_ens']
     # rh700 = data.variables['Relative_humidity_isobaric_ens']
 

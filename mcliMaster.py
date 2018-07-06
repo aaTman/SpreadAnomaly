@@ -11,6 +11,7 @@ import sys
 import mclifuncs as mc
 import plotter as pt
 import gc
+from nc import netCDFSSA
 
 from bs4 import BeautifulSoup
 import requests
@@ -31,7 +32,6 @@ class MidpointNormalize(Normalize):
         # simple example...
         x, y = [self.vmin, self.midpoint, self.vmax], [0, 0.5, 1]
         return np.ma.masked_array(np.interp(value, x, y))
-
 
 def mainfunc(token=0):
     mc.GEFScheck()
@@ -124,8 +124,9 @@ def slpFuncY(mslpMean, mslpStd, mslppmm, datefhour, dateArr,
         mArr,sArr = mc.mcliLoad(var='mslp', ind=ind)
 
     for i in range(0, len(mslpMean)):
-        subsetPerc[i], totalPerc[i], ssaAnom[i], saAnom[i] = mc.subsetMCli(mslpMean[i], mslpStd[i], mArr[:,i], sArr[:, i])
-    
+        subsetPerc[i], totalPerc[i], ssaAnom[i] = mc.subsetMCli(mslpMean[i], mslpStd[i], mArr[:,i], sArr[:, i])
+    a = netCDFSSA(ssaAnom[datefhour%24==0],(date.toordinal()+date.hour/24.))
+    a.detNewApp()    
     print 'completed SSA'
     print 'starting slp plots'
     if datetime.now().month >= 3 and datetime.now().month<=5:     
@@ -140,13 +141,13 @@ def slpFuncY(mslpMean, mslpStd, mslppmm, datefhour, dateArr,
         [pt.slpplotMakerY(date, mslpMean[i], mslpStd[i], datefhour[i],
          dateArr[i],mslppmm[i], lats, lons) for i in range(0, len(mslpMean))]
     gc.collect()
-
-
+   
+    
 def tmpFuncY(tmpMean, tmpStd, tmppmm, datefhour, dateArr,
             lats, lons, date, ind):
     print 'starting tmp plots'
     [pt.tmpplotMakerY(date, tmpMean[i], tmpStd[i], datefhour[i],
-     dateArr[i], tmppmm[i], lats, lons) for i in range(0, len(tmpMean))]
+     dateArr[i], tmppmm[i], lats, lons) for i in range(0, len(dateArr))]
     gc.collect()
 
 
@@ -154,7 +155,7 @@ def hgtFuncY(hgtMean, hgtStd, hgtpmm, datefhour, dateArr,
             lats, lons, date, ind):
     print 'starting hgt plots'
     [pt.hgtplotMakerY(date, hgtMean[i], hgtStd[i], datefhour[i],
-     dateArr[i], hgtpmm[i], lats, lons) for i in range(0, len(hgtMean))]
+     dateArr[i], hgtpmm[i], lats, lons) for i in range(0, len(dateArr))]
     gc.collect()
 
 
@@ -162,13 +163,13 @@ def pwatFuncY(pwatMean, pwatStd, pwatpmm, datefhour, dateArr,
              lats, lons, date, ind):
     print 'starting pwat plots'
     [pt.pwatplotMakerY(date, pwatMean[i], pwatStd[i], datefhour[i],
-     dateArr[i], pwatpmm[i], lats, lons) for i in range(0, len(pwatMean))]
+     dateArr[i], pwatpmm[i], lats, lons) for i in range(0, len(dateArr))]
 
 def qpfFuncY(qpfMean, qpfStd, qpfpmm, datefhour, dateArr,
             lats, lons, date, ind):
     print 'starting qpf plots'
     [pt.qpfplotMakerY(date, qpfMean[i], qpfStd[i], datefhour[i],
-     dateArr[i], qpfpmm[i], lats, lons) for i in range(0, len(qpfMean))]
+     dateArr[i], qpfpmm[i], lats, lons) for i in range(0, len(dateArr))]
     gc.collect()
 
 def slpFunc(mslpMean, mslpStd, mslppmm, datefhour, dateArr,
@@ -183,11 +184,13 @@ def slpFunc(mslpMean, mslpStd, mslppmm, datefhour, dateArr,
 
     for i in range(0, len(mslpMean)):
         subsetPerc[i], totalPerc[i], ssaAnom[i], saAnom[i] = mc.subsetMCli(mslpMean[i], mslpStd[i], mArr[:,i], sArr[:, i])
+    
     print 'starting slp plots'
     [pt.slpplotMaker(date, mslpMean[i], mslpStd[i], datefhour[i],
      dateArr[i], ssaAnom[i], subsetPerc[i], totalPerc[i], mslppmm[i],
-     lats, lons) for i in range(0, len(mslpMean))]
+     lats, lons) for i in range(0, len(dateArr))]
     gc.collect()
+    datafunc(ssaAnom)
 
 
 def tmpFunc(tmpMean, tmpStd, tmppmm, datefhour, dateArr,
