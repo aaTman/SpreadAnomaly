@@ -8,11 +8,12 @@ Created on Fri Jul  6 14:02:15 2018
 
 import numpy as np
 from netCDF4 import Dataset
+import os
 
 class netCDFSSA:
     
     def __init__(self, ssa, time):
-        self.ssa = ssa
+        self.ssa = np.expand_dims(ssa,axis=0)
         self.time = time
         
     def detNewApp(self):
@@ -23,11 +24,15 @@ class netCDFSSA:
             netCDFSSA.createNew(self)
             
     def createNew(self):
-        ds = Dataset('/home/taylorm/mcli/verifData.nc','w')
-        latitude = ds.createDimension("lat", size=61)
-        longitude = ds.createDimension("lon", size=141) 
-        fh = ds.createDimension("fhour", size=7)
-        init = ds.createDimension("initTime",size=None)
+        try:
+            ds = Dataset('/home/taylorm/mcli/verifData.nc','w')
+        except IOError:
+            os.remove('/home/taylorm/mcli/verifData.nc')
+            ds = Dataset('/home/taylorm/mcli/verifData.nc','w')
+        ds.createDimension("lat", size=61)
+        ds.createDimension("lon", size=141) 
+        ds.createDimension("fhour", size=7)
+        ds.createDimension("initTime",size=None)
 
         inits = ds.createVariable('initTime',np.float32,('initTime',))
         lats = ds.createVariable('latitude',np.int32, ('lat',))
@@ -41,7 +46,7 @@ class netCDFSSA:
         lons[:] = np.linspace(180,320,141)
         fhour[:]= np.arange(24,168.1,24)
         inits[:]=self.time
-        sspanom[:]=self.ssa
+        sspanom[0,:,:,:]=self.ssa
         ds.close()
         
     def appendNC(self,ds):
@@ -49,8 +54,8 @@ class netCDFSSA:
         if self.time == times[len(times)-1]:
             pass
         else:
-            ssa = ds.variables['ssa']
-            ssa[len(ssa)] = self.ssa
+            ssaNC = ds.variables['ssa']
+            ssaNC[len(times)] = self.ssa
             times[len(times)] = self.time
         ds.close()
 
